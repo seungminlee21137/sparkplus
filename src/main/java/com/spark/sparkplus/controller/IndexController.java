@@ -126,3 +126,10 @@ public class IndexController {
     
     
 }
+
+/* 예약 Request
+//get
+//https://community.sparkplus.co/user/qr/my_property
+//cookie: space=11ECF2B87C7BCF788FB50AE9EC11143E; session=r75tcms3pr481hpfjq1pc1j9hb7ftv51
+//referer: https://community.sparkplus.co/user/qr/my_property
+*/
