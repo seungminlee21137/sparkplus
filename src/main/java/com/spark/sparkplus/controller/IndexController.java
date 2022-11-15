@@ -33,7 +33,7 @@ public class IndexController {
     public String retry() throws IOException {
         
         HashMap<String, String> params = new HashMap<String, String>();
-
+        /*
         params.put("seq_visit_booking", "11ED5B0149552A6F8FB50AE9EC11143E");
         params.put("type", "always");
         
@@ -41,7 +41,7 @@ public class IndexController {
                 .timeout(3000)
                 .header("Origin", "https://community.sparkplus.co/")
                 .header("Referer", "https://community.sparkplus.co/")
-                .header("Accept", "application/json, text/javascript, */*; q=0.01")
+                .header("Accept", "application/json, text/javascript, * / *; q=0.01")
                 .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
                 .header("Accept-Encoding", "gzip, deflate, br")
                 .header("Accept-Language", "ko-KR,ko;q=0.8,en-US;q=0.6,en;q=0.4")
@@ -60,16 +60,21 @@ public class IndexController {
         String statusCode =  _status.toString().replace("\"", "");
         String base64img = "";
         
+        
+        
+        
+        
         if("00".equals(statusCode)) {
             @SuppressWarnings("deprecation")
             JsonElement mainJson = parser.parse(links.text()).getAsJsonObject().get("url");
             base64img = mainJson.toString().replace("data: ;base64,", "").replace("\"", "");
         }
         
+        */
         JsonObject obj =new JsonObject();
         
-        obj.addProperty("statusCode", statusCode);
-        obj.addProperty("base64img", base64img);
+        //obj.addProperty("statusCode", statusCode);
+        //obj.addProperty("base64img", base64img);
         
       
         return obj.toString();
@@ -89,19 +94,19 @@ public class IndexController {
 
         Document doc = Jsoup.connect(createQrURL)
                 .timeout(3000)
-                .header("Origin", "https://community.sparkplus.co/")
-                .header("Referer", "https://community.sparkplus.co/")
+                .header("Origin", "https://community.sparkplus.co")
+                .header("Referer", "https://community.sparkplus.co/user/qr/my_property")
                 .header("Accept", "application/json, text/javascript, */*; q=0.01")
                 .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
                 .header("Accept-Encoding", "gzip, deflate, br")
                 .header("Accept-Language", "ko-KR,ko;q=0.8,en-US;q=0.6,en;q=0.4")
-                .cookie("session", "771bj2or3cj19n74vqt576272chgqaf6; Path=/; HttpOnly; Expires=Sat, 11 Feb 9999 10:59:42 GMT;")
+                .cookie("session", "dbaih0n4u5t45u9rp7bl06ula2ta3mg9; Path=/; HttpOnly; Expires=Sat, 11 Feb 9999 10:59:42 GMT;")
                 .data(params)
                 .ignoreContentType(true)
                 .post();
         
         Elements links = doc.select("html body");
-        
+
         @SuppressWarnings("deprecation")
         JsonParser parser = new JsonParser();
         
@@ -113,14 +118,15 @@ public class IndexController {
         model.put("statusCode",statusCode);
         
         //System.out.println(result2.toString().replace("\"", "") + "," + result2.toString().replace("\"", "").equals("00"));
-        //System.out.println(mainJson.toString().replace("data: ;base64,", "").replace("\"", ""));
         
         if("00".equals(statusCode)) {
             @SuppressWarnings("deprecation")
             JsonElement mainJson = parser.parse(links.text()).getAsJsonObject().get("url");
+//          System.out.println(mainJson.toString().replace("data: ;base64,", "").replace("\"", ""));
+
             model.put("base64img", mainJson.toString().replace("data: ;base64,", "").replace("\"", ""));
         }
-        
+
         return "qrview";
     }
     
